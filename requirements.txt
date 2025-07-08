@@ -25,10 +25,5 @@ gdown>=4.7.1
 gitpython>=3.1.30
 setuptools>=70.0.0
 
-# YOLOv5 (ultralytics)
-ultralytics>=8.2.64
-
-# Optional for ONNX/CoreML/TensorRT/etc
-# onnx
-# tensorflowjs
-# openvino-dev
+# YOLOv5
+git+https://github.com/ultralytics/yolov5.git
