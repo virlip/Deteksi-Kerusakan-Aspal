@@ -1,0 +1,34 @@
+# Core
+numpy>=1.23.5
+pillow>=10.3.0
+opencv-python>=4.1.1
+matplotlib>=3.3
+PyYAML>=5.3.1
+requests>=2.32.2
+tqdm>=4.66.3
+pandas>=1.1.4
+seaborn>=0.11.0
+psutil
+thop>=0.1.1
+
+# Machine Learning
+torch>=1.8.0
+torchvision>=0.9.0
+tensorflow>=2.11.0
+keras>=2.11.0
+
+# Streamlit
+streamlit>=1.32.0
+
+# Utility
+gdown>=4.7.1
+gitpython>=3.1.30
+setuptools>=70.0.0
+
+# YOLOv5 (ultralytics)
+ultralytics>=8.2.64
+
+# Optional for ONNX/CoreML/TensorRT/etc
+# onnx
+# tensorflowjs
+# openvino-dev
