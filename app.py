@@ -20,11 +20,6 @@ if not os.path.exists("model_aspal_vs_nonaspal.h5"):
     gdown.download(url, "model_aspal_vs_nonaspal.h5", quiet=False)
 
 # =============================
-# 🔽 Install YOLOv5 (jika perlu)
-# =============================
-os.system("pip install git+https://github.com/ultralytics/yolov5.git")
-
-# =============================
 # 🔽 Import dan load model
 # =============================
 
