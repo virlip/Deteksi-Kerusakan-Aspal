@@ -14,8 +14,10 @@ thop>=0.1.1
 # Machine Learning
 torch==1.13.1
 torchvision==0.14.1
-tensorflow==2.13.0
-keras==2.13.1
+# tensorflow==2.13.0
+# keras==2.13.1
+keras==2.6.0
+tensorflow==2.6.0
 
 # Streamlit
 streamlit==1.46.1
