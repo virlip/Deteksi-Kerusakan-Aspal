@@ -35,6 +35,21 @@ If Asphalt → YOLOv5 → Bounding Box + Damage Labels
 
 ---
 
+## 🧾 Damage Categories (YOLOv5)
+
+The YOLOv5 model detects the following 4 types of road damage:
+
+| Label | Category Code | Description |
+|-------|---------------|-------------|
+| **D00** | Longitudinal Cracks | Cracks that run in the same direction as the road. |
+| **D10** | Transverse Cracks | Cracks that run across the road. |
+| **D20** | Alligator Cracks | Interconnected cracks forming a pattern similar to an alligator's skin. |
+| **D40** | Potholes | Deep depressions or holes in the road surface. |
+
+These categories follow the labeling format used in the Road Damage Dataset.
+
+---
+
 ## 📂 Dataset
 
 | Dataset | Description | Link |
