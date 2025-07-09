@@ -8,6 +8,8 @@ import sys
 import cv2
 import tempfile
 import time
+import platform
+
 
 # =============================
 # 🔽 Download model dari Google Drive (jika belum ada)
@@ -108,46 +110,50 @@ if uploaded_file is not None:
 # ===================================
 # 🎥 Webcam Real-time
 # ===================================
-st.title("📷 Deteksi Real-Time via Webcam")
+IS_CLOUD = "streamlit" in sys.executable.lower() or "cloud" in platform.node().lower()
 
-run_webcam = st.checkbox("🔴 Nyalakan Kamera")
-frame_window = st.image([])
-frame_count = 0
+if not IS_CLOUD:
+    st.title("📷 Deteksi Real-Time via Webcam")
 
-if run_webcam:
-    camera = cv2.VideoCapture(1)
+    run_webcam = st.checkbox("🔴 Nyalakan Kamera")
+    frame_window = st.image([])
+    frame_count = 0
 
-    while run_webcam:
-        success, frame = camera.read()
-        if not success:
-            st.error("❌ Gagal mengakses webcam.")
-            break
+    if run_webcam:
+        camera = cv2.VideoCapture(0)
 
-        frame_count += 1
-        if frame_count % 3 != 0:  # Skip setiap 2 dari 3 frame
-            continue
+        while run_webcam:
+            success, frame = camera.read()
+            if not success:
+                st.error("❌ Gagal mengakses webcam.")
+                break
 
-        # Resize untuk klasifikasi
-        frame_resized = cv2.resize(frame, (128, 128))
-        image_pil = Image.fromarray(cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB))
+            frame_count += 1
+            if frame_count % 3 != 0:
+                continue
 
-        score = classify_image(image_pil)
+            frame_resized = cv2.resize(frame, (128, 128))
+            image_pil = Image.fromarray(cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB))
 
-        if score < 0.5:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmpfile:
-                # Simpan frame penuh (frame original) untuk deteksi YOLO
-                full_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                Image.fromarray(full_rgb).save(tmpfile.name)
+            score = classify_image(image_pil)
 
-                with torch.no_grad():  # Supaya YOLO tidak simpan gradien
-                    result_img = detect_damage(tmpfile.name)
+            if score < 0.5:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmpfile:
+                    full_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    Image.fromarray(full_rgb).save(tmpfile.name)
 
-            frame_window.image(result_img, caption="✅ Aspal - Deteksi Kerusakan", use_container_width=True)
-        else:
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame_window.image(frame_rgb, caption="⚠️ Bukan jalan aspal", use_container_width=True)
+                    with torch.no_grad():
+                        result_img = detect_damage(tmpfile.name)
 
-        time.sleep(0.05)  # Delay sedikit agar tidak berat
+                frame_window.image(result_img, caption="✅ Aspal - Deteksi Kerusakan", use_container_width=True)
+            else:
+                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame_window.image(frame_rgb, caption="⚠️ Bukan jalan aspal", use_container_width=True)
 
-    camera.release()
-    st.write("🟢 Kamera dimatikan.")
+            time.sleep(0.05)
+
+        camera.release()
+        st.write("🟢 Kamera dimatikan.")
+else:
+    st.title("📷 Deteksi Real-Time via Webcam")
+    st.warning("⚠️ Webcam tidak tersedia di Streamlit Cloud.")
