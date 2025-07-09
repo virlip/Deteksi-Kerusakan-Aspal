@@ -5,7 +5,10 @@ import torch
 import torchvision.transforms as transforms
 import os
 import sys
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
 import tempfile
 import time
 import platform
