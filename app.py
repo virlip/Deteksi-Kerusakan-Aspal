@@ -21,7 +21,7 @@ import gdown
 
 if not os.path.exists("model_aspal_vs_nonaspal.h5"):
     st.info("📥 Mengunduh model klasifikasi jalan dari Google Drive...")
-    url = "https://drive.google.com/uc?id=11I7KH0_-Hu7uPoWZwpiHQx2u62CHtoE-"
+    url = "https://drive.google.com/uc?id=1K--c8mk_MJUw6_egevRVK0dvO8rFa6iT"
     gdown.download(url, "model_aspal_vs_nonaspal.h5", quiet=False)
 
 # =============================
