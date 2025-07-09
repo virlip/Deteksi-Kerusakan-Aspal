@@ -115,7 +115,7 @@ if uploaded_file is not None:
 # ===================================
 IS_CLOUD = "streamlit" in sys.executable.lower() or "cloud" in platform.node().lower()
 
-if not IS_CLOUD:
+if not IS_CLOUD and cv2 is not None:
     st.title("📷 Deteksi Real-Time via Webcam")
 
     run_webcam = st.checkbox("🔴 Nyalakan Kamera")
@@ -159,4 +159,4 @@ if not IS_CLOUD:
         st.write("🟢 Kamera dimatikan.")
 else:
     st.title("📷 Deteksi Real-Time via Webcam")
-    st.warning("⚠️ Webcam tidak tersedia di Streamlit Cloud.")
+    st.warning("⚠️ Webcam tidak tersedia di Streamlit Cloud atau modul cv2 tidak tersedia.")
